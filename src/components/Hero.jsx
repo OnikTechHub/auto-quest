@@ -2,31 +2,31 @@
 import React from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 
-export default function Hero() {
+const Hero = () => {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.7, ease: "easeOut" } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" }
     }
   };
 
   return (
     <section className="relative w-full min-h-[85vh] flex items-center bg-gradient-to-tr from-[#F4F1EA] via-[#FDFBF7] to-[#EBF3F0] overflow-hidden px-6 lg:px-16 py-12">
-      
+
       {/* Background Glows */}
       <div className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full bg-emerald-500/[0.08] blur-[160px] pointer-events-none"></div>
       <div className="absolute bottom-[-15%] left-[-10%] w-[600px] h-[600px] rounded-full bg-teal-600/[0.06] blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full relative z-10">
-        
+
         {/* Left Side: Text Content */}
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={{
@@ -70,20 +70,20 @@ export default function Hero() {
 
         {/* Right Side: Car Image */}
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="relative flex justify-center items-center order-1 lg:order-2 w-full max-w-[530px] mx-auto group"
         >
-          
+
           <div className="absolute inset-0 bg-gradient-to-tr from-emerald-600/10 via-emerald-500/5 to-teal-600/10 rounded-[2.5rem] blur-3xl group-hover:scale-105 transition-all duration-700 pointer-events-none"></div>
 
           <div className="relative p-1.5 rounded-[2.5rem] bg-gradient-to-br from-white via-slate-200/60 to-emerald-500/10 shadow-xl transition-all duration-500 w-full overflow-hidden border border-slate-200/40">
-            
+
             <div className="relative rounded-[2.3rem] bg-white/70 p-3 backdrop-blur-xl border border-white/60 overflow-hidden shadow-inner">
               <img
-                src="https://i.ibb.co/xKg3ZBsD/home-car.jpg" 
+                src="https://i.ibb.co/xKg3ZBsD/home-car.jpg"
                 alt="Premium Luxury Car"
                 className="relative z-10 w-full h-auto object-cover rounded-[1.8rem] transform group-hover:scale-[1.01] transition-transform duration-500"
               />
@@ -96,3 +96,5 @@ export default function Hero() {
     </section>
   );
 }
+
+export default Hero;

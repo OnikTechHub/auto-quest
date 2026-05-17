@@ -30,7 +30,7 @@ const features = [
   }
 ];
 
-export default function WhyChooseUs() {
+const WhyChooseUs = () => {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -107,3 +107,5 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+
+export default WhyChooseUs;

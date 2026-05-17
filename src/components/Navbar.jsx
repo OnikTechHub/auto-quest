@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { RiCarLine } from "react-icons/ri";
 import { IoCarSportSharp } from "react-icons/io5";
 
-export default function Navbar() {
+const Navbar = () => {
   const pathname = usePathname();
   const isLoggedIn = false; 
 
@@ -48,3 +48,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar;

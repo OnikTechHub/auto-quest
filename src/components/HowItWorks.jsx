@@ -24,7 +24,7 @@ const steps = [
   }
 ];
 
-export default function HowItWorks() {
+const HowItWorks = () => {
     
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -99,3 +99,5 @@ export default function HowItWorks() {
     </section>
   );
 }
+
+export default HowItWorks;
