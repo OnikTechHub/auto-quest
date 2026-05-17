@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { FiMapPin, FiCalendar, FiCheckCircle } from "react-icons/fi";
+import { motion } from "framer-motion"; 
 
 const steps = [
   {
@@ -24,12 +25,28 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+    
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.6, ease: "easeOut" } 
+    }
+  };
+
   return (
     <section className="w-full py-20 px-6 lg:px-16 bg-[#F8F6F0]/60 relative overflow-hidden border-t border-b border-slate-200/40">
       <div className="max-w-7xl mx-auto">
         
-        {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-16 space-y-3">
+
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="text-center max-w-xl mx-auto mb-16 space-y-3"
+        >
           <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-600/10 text-emerald-700 border border-emerald-600/20">
             How It Works
           </span>
@@ -39,13 +56,22 @@ export default function HowItWorks() {
           <p className="text-slate-500 font-light">
             Our premium booking workflow is streamlined to save your time and give you the ultimate hassle-free experience.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.15 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10"
+        >
           {steps.map((step) => (
-            <div 
+            <motion.div 
               key={step.id}
+              variants={fadeInUp}
               className="group relative rounded-[2rem] bg-white border border-slate-200/50 p-8 shadow-sm hover:shadow-xl transition-all duration-300 text-center"
             >
               {/* Step Number Badge */}
@@ -65,9 +91,9 @@ export default function HowItWorks() {
               <p className="text-sm text-slate-500 leading-relaxed font-light">
                 {step.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>
