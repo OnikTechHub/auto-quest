@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiCarLine } from "react-icons/ri";
+import { IoCarSportSharp } from "react-icons/io5";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -17,7 +18,7 @@ export default function Navbar() {
     <nav className="w-full bg-[#0B132B]/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 text-2xl font-black tracking-wider bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-        <RiCarLine className="text-emerald-400 text-3xl" />
+        <IoCarSportSharp className="text-emerald-400 text-3xl" />
         AutoQuest
       </Link>
 
