@@ -3,6 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { IoCarSportSharp } from "react-icons/io5";
+import { TfiEmail } from "react-icons/tfi";
+import { BiTime } from "react-icons/bi";
+import { GoLocation } from "react-icons/go";
+import { FiPhoneCall } from "react-icons/fi";
 
 const Footer = () => {
     return (
@@ -52,27 +56,74 @@ const Footer = () => {
                 </div>
 
                 {/* Contact & Socials */}
-                <div className="space-y-4">
-                    <h4 className="text-sm font-bold uppercase tracking-wider text-slate-800">Follow Us</h4>
-                    <p className="text-sm text-slate-500 font-light">Stay connected with our luxury lifestyle updates.</p>
-                    <div className="flex items-center gap-3">
-                        {[<FaFacebookF />, <FaTwitter />, <FaInstagram />, <FaLinkedinIn />].map((icon, idx) => (
-                            <a
-                                key={idx}
-                                href="#"
-                                className="w-9 h-9 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 text-slate-500 flex items-center justify-center shadow-sm transition-all hover:scale-105 active:scale-95 duration-200"
-                            >
-                                {icon}
-                            </a>
-                        ))}
+                <div className="space-y-5">
+                    <div>
+                        <h4 className="text-sm font-bold uppercase tracking-[3px] text-slate-800">
+                            Follow Us
+                        </h4>
+                        <p className="text-sm text-slate-500 font-light mt-2">
+                            Stay connected with our luxury lifestyle updates.
+                        </p>
                     </div>
-                </div>
 
+                    {/* Contact Info Style */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-3 text-slate-600">
+                            <div className="w-9 h-9 rounded-full bg-pink-50 flex items-center justify-center text-emerald-500 shadow-sm">
+                                <TfiEmail />
+                            </div>
+
+                            <span className="text-sm font-medium">
+                                auto-quest@gmail.com
+                            </span>
+                        </div>
+
+                        <div className="flex items-center gap-3 text-slate-600">
+                            <div className="w-9 h-9 rounded-full bg-pink-50 flex items-center justify-center text-emerald-500 shadow-sm">
+                                <FiPhoneCall />
+                            </div>
+
+                            <span className="text-sm font-medium">
+                                +880 1700-000000
+                            </span>
+                        </div>
+
+                        <div className="flex items-center gap-3 text-slate-600">
+                            <div className="w-9 h-9 rounded-full bg-pink-50 flex items-center justify-center text-emerald-500 shadow-sm">
+                                <GoLocation />
+                            </div>
+
+                            <span className="text-sm font-medium">
+                                Chattogram, Bangladesh
+                            </span>
+                        </div>
+                    </div>
+
+                   
+                </div>
             </div>
 
             {/* Bottom Copyright */}
             <div className="max-w-7xl mx-auto pt-8 border-t border-slate-200/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400 font-medium">
                 <p>© {new Date().getFullYear()} AutoQuest. All rights reserved.</p>
+
+                 {/* Social Icons */}
+                    <div className="flex items-center gap-3 pt-2">
+                        {[
+                            <FaFacebookF />,
+                            <FaTwitter />,
+                            <FaInstagram />,
+                            <FaLinkedinIn />,
+                        ].map((icon, idx) => (
+                            <a
+                                key={idx}
+                                href="#"
+                                className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-500 text-slate-500 flex items-center justify-center shadow-sm transition-all duration-300 hover:-translate-y-1"
+                            >
+                                {icon}
+                            </a>
+                        ))}
+                    </div>
                 <p className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent font-semibold capitalize">
                     Designed with Onik
                 </p>
