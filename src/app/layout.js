@@ -1,0 +1,22 @@
+import Footer from "@/components/Footer";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
+
+export const metadata = {
+  title: "AutoQuest - Premium Car Rental Platform",
+  description: "Find, Book, and Rent a Car in Easy Steps",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className="bg-[#fdfbf7f0] antialiased">
+        <Navbar />
+          <Toaster position="top-center" />
+        {children}
+        <Footer />
+      </body>
+    </html>
+  );
+}
