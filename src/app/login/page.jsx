@@ -6,7 +6,7 @@ import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
-import { authClient } from "@/lib/auth-client"; // Better Auth ক্লায়েন্ট ইম্পোর্ট
+import { authClient } from "@/lib/auth-client"; 
 
 const LoginPage = () => {
   const router = useRouter();
