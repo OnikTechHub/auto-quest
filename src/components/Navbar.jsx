@@ -121,19 +121,18 @@ const Navbar = () => {
                 <img 
                   src={user.image} 
                   alt={user.name} 
-                  className="w-7 h-7 sm:w-8 h-8 rounded-xl object-cover border border-emerald-500/30"
+                  className="w-8 h-8 rounded-xl object-cover border border-emerald-500/30"
                 />
               ) : (
-                <div className="w-7 h-7 sm:w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
                   {user?.name ? user.name[0].toUpperCase() : "U"}
                 </div>
               )}
-              <span className="text-slate-300 text-xs sm:text-sm hidden xs:inline px-1">
+              <span className="text-slate-300 text-sm hidden sm:inline px-1">
                 {user?.name?.split(" ")[0]}
               </span>
-              <FiChevronDown className={`text-slate-400 text-xs sm:text-sm transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
+              <FiChevronDown className={`text-slate-400 text-sm transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
             </button>
-
 
             {isDropdownOpen && (
               <div className="absolute right-0 mt-3 w-48 sm:w-56 bg-[#0B132B] border border-slate-800 rounded-2xl shadow-2xl py-2 z-50">
