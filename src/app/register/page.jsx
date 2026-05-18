@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -247,16 +246,3 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage
-=======
-import React from 'react';
-
-const page = () => {
-  return (
-    <div>
-      register page
-    </div>
-  );
-};
-
-export default page;
->>>>>>> e1ac885f1fcacbf918e9788eb830f2b0c2b9ffb7

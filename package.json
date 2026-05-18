@@ -9,16 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@better-auth/mongo-adapter": "^1.6.11",
     "axios": "^1.16.1",
     "better-auth": "^1.6.11",
     "framer-motion": "^12.38.0",
     "mongodb": "^7.2.0",
-=======
-    "axios": "^1.16.1",
-    "framer-motion": "^12.38.0",
->>>>>>> e1ac885f1fcacbf918e9788eb830f2b0c2b9ffb7
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
