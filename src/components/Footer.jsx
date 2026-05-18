@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { RiCarLine } from "react-icons/ri";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { IoCarSportSharp } from "react-icons/io5";
 
 const Footer = () => {
     return (
@@ -13,7 +13,7 @@ const Footer = () => {
                 <div className="space-y-4 md:col-span-1">
                     <Link href="/" className="flex items-center gap-2 group">
                         <div className="p-2 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20">
-                            <RiCarLine className="text-xl group-hover:rotate-12 transition-transform duration-300" />
+                            <IoCarSportSharp className="text-xl group-hover:rotate-12 transition-transform duration-300" />
                         </div>
                         <span className="text-xl font-black bg-gradient-to-r from-slate-900 to-slate-800 bg-clip-text text-transparent tracking-tight">
                             AutoQuest
