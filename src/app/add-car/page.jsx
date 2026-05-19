@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { FiPlusCircle, FiImage, FiTrendingUp, FiCheckCircle, FiMapPin, FiUsers, FiCpu } from "react-icons/fi";
 import { toast } from "react-hot-toast"; 
 
-export default function AddCarPage() {
+const AddCarPage = () => {
   const router = useRouter();
   
   const [formData, setFormData] = useState({
@@ -232,3 +232,5 @@ export default function AddCarPage() {
     </div>
   );
 }
+
+export default AddCarPage;
