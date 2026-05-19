@@ -1,0 +1,142 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { FiMapPin, FiUsers, FiCpu, FiDollarSign, FiBookmark, FiArrowLeft } from "react-icons/fi";
+import Link from "next/link";
+
+const CarDetailsPage = () => {
+  const { id } = useParams();
+  const [car, setCar] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchCarDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/cars/${id}`);
+        const data = await response.json();
+        if (data.success) {
+          setCar(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching car details:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCarDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#F4F7F6] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-10 h-10 border-4 border-[#00B488] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-500 text-sm animate-pulse">Loading vehicle details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!car) {
+    return (
+      <div className="min-h-screen bg-[#F4F7F6] flex items-center justify-center p-4">
+        <div className="text-center bg-white p-8 rounded-3xl max-w-sm shadow-sm border border-slate-100">
+          <p className="text-slate-500 font-medium mb-4">Vehicle information not found!</p>
+          <Link href="/cars" className="bg-[#00B488] text-white px-4 py-2 rounded-xl text-sm font-bold">
+            Back to Explore
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F4F7F6] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+
+        {/* back btn  */}
+        <Link href="/cars" className="inline-flex items-center gap-2 text-slate-600 hover:text-[#00B488] font-semibold text-sm mb-6 transition-colors">
+          <FiArrowLeft /> Back to Explore
+        </Link>
+
+        {/* main cont */}
+        <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xl shadow-slate-200/40 grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8">
+
+          {/* img */}
+          <div className="relative h-64 md:h-full min-h-[300px] w-full bg-[#F8FAFC] rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-4">
+
+            <img
+              src={car.carImage}
+              alt={car.carName}
+              className="w-full h-full object-contain"
+            />
+            <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${car.availabilityStatus === "Available"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-600"
+              : "bg-rose-50 border-rose-200 text-rose-600"
+              }`}>
+              {car.availabilityStatus}
+            </span>
+          </div>
+
+          {/* info */}
+          <div className="flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="bg-emerald-50 text-[#00B488] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-emerald-200/50">
+                  {car.carType}
+                </span>
+                <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-md">
+                  Booked: {car.bookingCount || 0} times
+                </span>
+              </div>
+
+              <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-3">{car.carName}</h1>
+              <p className="text-slate-500 text-sm leading-relaxed mb-6">{car.description}</p>
+
+
+              <div className="space-y-3.5 border-t border-slate-100 pt-5">
+                <div className="flex items-center gap-3 text-slate-700 text-sm font-medium">
+                  <div className="p-2 bg-slate-50 rounded-lg text-[#00B488]"><FiUsers /></div>
+                  <span>Seating Capacity: <strong className="text-slate-900">{car.seatCapacity} Persons</strong></span>
+                </div>
+                <div className="flex items-center gap-3 text-slate-700 text-sm font-medium">
+                  <div className="p-2 bg-slate-50 rounded-lg text-[#00B488]"><FiMapPin /></div>
+                  <span>Pickup Location: <strong className="text-slate-900">{car.pickupLocation}</strong></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="border-t border-slate-100 pt-5 flex items-center justify-between gap-4 mt-auto">
+              <div>
+                <span className="text-xs text-slate-400 block font-medium">Daily Rental Price</span>
+                <div className="flex items-baseline text-slate-900 font-black text-3xl">
+                  <FiDollarSign className="text-lg text-slate-500 self-center" />
+                  {car.dailyPrice}
+                </div>
+              </div>
+
+              {/*  Book Now btn */}
+              <button
+                disabled={car.availabilityStatus !== "Available"}
+                className={`flex items-center gap-2 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm cursor-pointer active:scale-95 ${car.availabilityStatus === "Available"
+                  ? "bg-[#00B488] hover:bg-[#009670] text-white shadow-emerald-500/10 hover:shadow-emerald-500/20"
+                  : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+                  }`}
+              >
+                <FiBookmark />
+                Book Now
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CarDetailsPage;
