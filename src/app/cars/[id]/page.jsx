@@ -4,17 +4,19 @@ import { useParams, useRouter } from "next/navigation";
 import { FiMapPin, FiUsers, FiDollarSign, FiBookmark, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
 import BookingModal from "@/components/BookingModal";
-
 import toast, { Toaster } from "react-hot-toast";
+import { authClient } from "@/lib/auth-client"; 
 
-export default function CarDetailsPage() {
+const CarDetailsPage = () => {
   const { id } = useParams();
   const router = useRouter();
+  
+  const { data: session, isPending: authLoading } = authClient.useSession();
+  const loggedInUserEmail = session?.user?.email;
+
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const loggedInUserEmail = "onikdas.dev@gmail.com";
 
   useEffect(() => {
     if (!id) return;
@@ -28,6 +30,7 @@ export default function CarDetailsPage() {
         }
       } catch (error) {
         console.error("Error fetching car details:", error);
+        toast.error("Failed to load vehicle details.");
       } finally {
         setLoading(false);
       }
@@ -36,13 +39,23 @@ export default function CarDetailsPage() {
     fetchCarDetails();
   }, [id]);
 
-  const handleBookingSuccess = () => {
+  const handleBookingClick = () => {
+    if (!session) {
+      toast.error("Please log in first to book this vehicle! ");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+      return;
+    }
+    setIsModalOpen(true);
+  };
 
+  const handleBookingSuccess = () => {
     toast.success(`Successfully booked ${car.carName} `, {
       duration: 3000,
       position: "top-center",
       style: {
-        background: "#white",
+        background: "white",
         color: "#0f172a",
         fontWeight: "600",
         borderRadius: "16px",
@@ -51,15 +64,20 @@ export default function CarDetailsPage() {
       },
     });
 
-    setIsModalOpen(false);
+  
+    setCar((prevCar) => ({
+      ...prevCar,
+      bookingCount: (prevCar.bookingCount || 0) + 1,
+    }));
 
+    setIsModalOpen(false);
 
     setTimeout(() => {
       router.push("/my-bookings");
     }, 2000);
   };
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <div className="min-h-screen bg-[#F4F7F6] flex items-center justify-center">
         <div className="flex flex-col items-center gap-2">
@@ -86,10 +104,8 @@ export default function CarDetailsPage() {
   return (
     <div className="min-h-screen bg-[#F4F7F6] py-12 px-4 sm:px-6 lg:px-8">
 
-      <Toaster />
-
       <div className="max-w-4xl mx-auto">
-        <Link href="/cars" className="inline-flex items-center gap-2 text-slate-600 hover:text-[#00B488] font-semibold text-sm mb-6 transition-colors">
+        <Link href="/cars" className="inline-flex items-center gap-2 text-slate-600 hover:text-[#00B488] font-semibold text-sm mb-6 transition-colors cursor-pointer">
           <FiArrowLeft /> Back to Explore
         </Link>
 
@@ -97,9 +113,12 @@ export default function CarDetailsPage() {
 
           <div className="relative h-64 md:h-full min-h-[300px] w-full bg-[#F8FAFC] rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-4">
             <img src={car.carImage} alt={car.carName} className="w-full h-full object-contain" />
-            <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${car.availabilityStatus === "Available" ? "bg-emerald-50 border-emerald-200 text-emerald-600" : "bg-rose-50 border-rose-200 text-rose-600"
-              }`}>
-              {car.availabilityStatus}
+            <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${
+              car.availabilityStatus === "Available" || car.availability === "Available" 
+                ? "bg-emerald-50 border-emerald-200 text-emerald-600" 
+                : "bg-rose-50 border-rose-200 text-rose-600"
+            }`}>
+              {car.availabilityStatus || car.availability || "Available"}
             </span>
           </div>
 
@@ -107,7 +126,7 @@ export default function CarDetailsPage() {
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="bg-emerald-50 text-[#00B488] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-emerald-200/50">
-                  {car.carType}
+                  {car.carType || car.type}
                 </span>
                 <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-md">
                   Booked: {car.bookingCount || 0} times
@@ -124,7 +143,7 @@ export default function CarDetailsPage() {
                 </div>
                 <div className="flex items-center gap-3 text-slate-700 text-sm font-medium">
                   <div className="p-2 bg-slate-50 rounded-lg text-[#00B488]"><FiMapPin /></div>
-                  <span>Pickup Location: <strong className="text-slate-900">{car.pickupLocation}</strong></span>
+                  <span>Pickup Location: <strong className="text-slate-900">{car.pickupLocation || car.location}</strong></span>
                 </div>
               </div>
             </div>
@@ -134,17 +153,18 @@ export default function CarDetailsPage() {
                 <span className="text-xs text-slate-400 block font-medium">Daily Rental Price</span>
                 <div className="flex items-baseline text-slate-900 font-black text-3xl">
                   <FiDollarSign className="text-lg text-slate-500 self-center" />
-                  {car.dailyPrice}
+                  {car.dailyPrice || car.price}
                 </div>
               </div>
 
               <button
-                onClick={() => setIsModalOpen(true)}
-                disabled={car.availabilityStatus !== "Available"}
-                className={`flex items-center gap-2 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm cursor-pointer active:scale-95 ${car.availabilityStatus === "Available"
+                onClick={handleBookingClick}
+                disabled={car.availabilityStatus === "Unavailable" || car.availability === "Unavailable"}
+                className={`flex items-center gap-2 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm cursor-pointer active:scale-95 ${
+                  car.availabilityStatus !== "Unavailable" && car.availability !== "Unavailable"
                     ? "bg-[#00B488] hover:bg-[#009670] text-white shadow-emerald-500/10"
                     : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-                  }`}
+                }`}
               >
                 <FiBookmark />
                 Book Now
@@ -154,7 +174,6 @@ export default function CarDetailsPage() {
 
         </div>
       </div>
-
 
       <BookingModal
         isOpen={isModalOpen}
@@ -166,3 +185,5 @@ export default function CarDetailsPage() {
     </div>
   );
 }
+
+export default CarDetailsPage

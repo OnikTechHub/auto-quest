@@ -147,7 +147,7 @@ const Navbar = () => {
                   </Link>
 
                   <Link 
-                    href="/bookings" 
+                    href="/my-bookings" 
                     onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-3 py-2.5 text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 rounded-xl transition-all text-sm font-medium"
                   >

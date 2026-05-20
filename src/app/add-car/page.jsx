@@ -47,9 +47,9 @@ const AddCarPage = () => {
 
       if (data.success) {
         if (typeof toast !== "undefined") {
-          toast.success("Car listing added successfully! 🎉");
+          toast.success("Car listing added successfully! ");
         } else {
-          alert("Car listing added successfully! 🎉");
+          alert("Car listing added successfully! ");
         }
 
         setFormData({
