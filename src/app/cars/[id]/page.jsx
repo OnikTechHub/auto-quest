@@ -1,13 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import { FiMapPin, FiUsers, FiCpu, FiDollarSign, FiBookmark, FiArrowLeft } from "react-icons/fi";
+import { useParams, useRouter } from "next/navigation";
+import { FiMapPin, FiUsers, FiDollarSign, FiBookmark, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
+import BookingModal from "@/components/BookingModal";
 
-const CarDetailsPage = () => {
+import toast, { Toaster } from "react-hot-toast";
+
+export default function CarDetailsPage() {
   const { id } = useParams();
+  const router = useRouter();
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const loggedInUserEmail = "onikdas.dev@gmail.com";
 
   useEffect(() => {
     if (!id) return;
@@ -28,6 +35,29 @@ const CarDetailsPage = () => {
 
     fetchCarDetails();
   }, [id]);
+
+  const handleBookingSuccess = () => {
+
+    toast.success(`Successfully booked ${car.carName} `, {
+      duration: 3000,
+      position: "top-center",
+      style: {
+        background: "#white",
+        color: "#0f172a",
+        fontWeight: "600",
+        borderRadius: "16px",
+        border: "1px solid #e2e8f0",
+        padding: "16px"
+      },
+    });
+
+    setIsModalOpen(false);
+
+
+    setTimeout(() => {
+      router.push("/my-bookings");
+    }, 2000);
+  };
 
   if (loading) {
     return (
@@ -55,33 +85,24 @@ const CarDetailsPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F7F6] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
 
-        {/* back btn  */}
+      <Toaster />
+
+      <div className="max-w-4xl mx-auto">
         <Link href="/cars" className="inline-flex items-center gap-2 text-slate-600 hover:text-[#00B488] font-semibold text-sm mb-6 transition-colors">
           <FiArrowLeft /> Back to Explore
         </Link>
 
-        {/* main cont */}
         <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xl shadow-slate-200/40 grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8">
 
-          {/* img */}
           <div className="relative h-64 md:h-full min-h-[300px] w-full bg-[#F8FAFC] rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-4">
-
-            <img
-              src={car.carImage}
-              alt={car.carName}
-              className="w-full h-full object-contain"
-            />
-            <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${car.availabilityStatus === "Available"
-              ? "bg-emerald-50 border-emerald-200 text-emerald-600"
-              : "bg-rose-50 border-rose-200 text-rose-600"
+            <img src={car.carImage} alt={car.carName} className="w-full h-full object-contain" />
+            <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${car.availabilityStatus === "Available" ? "bg-emerald-50 border-emerald-200 text-emerald-600" : "bg-rose-50 border-rose-200 text-rose-600"
               }`}>
               {car.availabilityStatus}
             </span>
           </div>
 
-          {/* info */}
           <div className="flex flex-col justify-between space-y-6">
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -96,7 +117,6 @@ const CarDetailsPage = () => {
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-3">{car.carName}</h1>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">{car.description}</p>
 
-
               <div className="space-y-3.5 border-t border-slate-100 pt-5">
                 <div className="flex items-center gap-3 text-slate-700 text-sm font-medium">
                   <div className="p-2 bg-slate-50 rounded-lg text-[#00B488]"><FiUsers /></div>
@@ -109,7 +129,6 @@ const CarDetailsPage = () => {
               </div>
             </div>
 
-
             <div className="border-t border-slate-100 pt-5 flex items-center justify-between gap-4 mt-auto">
               <div>
                 <span className="text-xs text-slate-400 block font-medium">Daily Rental Price</span>
@@ -119,12 +138,12 @@ const CarDetailsPage = () => {
                 </div>
               </div>
 
-              {/*  Book Now btn */}
               <button
+                onClick={() => setIsModalOpen(true)}
                 disabled={car.availabilityStatus !== "Available"}
                 className={`flex items-center gap-2 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all text-sm cursor-pointer active:scale-95 ${car.availabilityStatus === "Available"
-                  ? "bg-[#00B488] hover:bg-[#009670] text-white shadow-emerald-500/10 hover:shadow-emerald-500/20"
-                  : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+                    ? "bg-[#00B488] hover:bg-[#009670] text-white shadow-emerald-500/10"
+                    : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
                   }`}
               >
                 <FiBookmark />
@@ -135,8 +154,15 @@ const CarDetailsPage = () => {
 
         </div>
       </div>
+
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        car={car}
+        userEmail={loggedInUserEmail}
+        onBookingSuccess={handleBookingSuccess}
+      />
     </div>
   );
 }
-
-export default CarDetailsPage;
