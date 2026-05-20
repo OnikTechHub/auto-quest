@@ -58,7 +58,7 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "Explore Cars", href: "/cars" },
     { name: "Add Car", href: "/add-car" },
-    { name: "My Bookings", href: "/bookings" },
+    { name: "My Bookings", href: "/my-bookings" },
   ];
 
   return (
