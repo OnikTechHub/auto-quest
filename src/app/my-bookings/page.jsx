@@ -18,7 +18,7 @@ const MyBookingsPage = () => {
 
     const fetchMyBookings = async () => {
       try {
-        const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings?email=${session.user.email}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings?email=${session.user.email}`);
         const data = await response.json();
         
         if (data.success) {

@@ -30,7 +30,7 @@ const MyCarsPage = () => {
 
   const fetchMyCars = async () => {
     try {
-      const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/my-cars?email=${userEmail}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/my-cars?email=${userEmail}`);
       const data = await response.json();
       if (data.success) {
         setCars(data.data);
