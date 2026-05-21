@@ -10,7 +10,6 @@ const MyCarsPage = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  
   const [deleteId, setDeleteId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
@@ -28,6 +27,7 @@ const MyCarsPage = () => {
   };
   const [formData, setFormData] = useState(initialFormState);
 
+//  Fetch All Cars API
   const fetchMyCars = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/my-cars?email=${userEmail}`);
@@ -59,13 +59,13 @@ const MyCarsPage = () => {
     setShowFormModal(true);
   };
   
-
+  
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       if (modalType === "add") {
         
-        const response = await fetch("({process.env.NEXT_PUBLIC_SERVER_URL}/api/cars", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -79,8 +79,8 @@ const MyCarsPage = () => {
           toast.error("Failed to add car.");
         }
       } else {
-
-        const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${formData._id}`, {
+        
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${formData._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -105,9 +105,11 @@ const MyCarsPage = () => {
     setShowDeleteModal(true);
   };
 
+  
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}api/cars/${deleteId}`, {
+      
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -145,7 +147,6 @@ const MyCarsPage = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">My Added Cars</h1>
-            
           </div>
           <button 
             onClick={handleAddClick}
@@ -156,15 +157,10 @@ const MyCarsPage = () => {
         </div>
 
         {cars.length === 0 ? (
-
           <div className="text-center bg-white border border-slate-100 rounded-3xl p-12 max-w-md mx-auto shadow-sm">
             <p className="text-slate-500 font-medium mb-4">Manage, update, or expand your personal rental fleet seamlessly.</p>
-            
           </div>
         ) : (
-
-          // main car
-
           <div className="bg-white border border-slate-100 rounded-2xl shadow-xl shadow-slate-200/40 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -181,7 +177,12 @@ const MyCarsPage = () => {
                   {cars.map((car) => (
                     <tr key={car._id} className="hover:bg-slate-50/50 transition-colors">
                       <td className="p-5 flex items-center gap-4">
-                        <img src={car.carImage} alt={car.carName} className="w-16 h-12 object-cover rounded-lg bg-slate-50 border border-slate-100" onError={(e)=>{e.target.src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500"}} />
+                        <img 
+                          src={car.carImage} 
+                          alt={car.carName} 
+                          className="w-16 h-12 object-cover rounded-lg bg-slate-50 border border-slate-100" 
+                          onError={(e)=>{e.target.src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500"}} 
+                        />
                         <div>
                           <p className="font-bold text-slate-800">{car.carName}</p>
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -212,7 +213,7 @@ const MyCarsPage = () => {
           </div>
         )}
 
-        {/* modal 1 */}
+        {/* Delete Modal */}
         {showDeleteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
             <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl text-center">
@@ -233,8 +234,7 @@ const MyCarsPage = () => {
           </div>
         )}
 
-        {/* model 2 */}
-
+        {/* Form Modal (Add & Edit) */}
         {showFormModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 overflow-y-auto">
             <div className="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative my-auto animate-scaleUp">
