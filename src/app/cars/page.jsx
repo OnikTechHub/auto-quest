@@ -121,9 +121,7 @@ const ExploreCarsPage = () => {
         {cars.length === 0 ? (
           <div className="text-center bg-white border border-slate-100 rounded-3xl p-12 max-w-md mx-auto shadow-sm">
             <p className="text-slate-500 font-medium mb-4">No cars available in the garage right now.</p>
-            <a href="/add-car" className="inline-flex bg-[#00B488] hover:bg-[#009670] text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all">
-              Add Your First Car
-            </a>
+            
           </div>
         ) : (
 
