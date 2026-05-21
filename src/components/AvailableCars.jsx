@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { FaLocationDot } from "react-icons/fa6";
 
 const AvailableCarsSection = () => {
     const [cars, setCars] = useState([]);
@@ -119,7 +119,7 @@ const AvailableCarsSection = () => {
                                     {/* Bottom Info */}
                                     <div className="grid grid-cols-2 gap-2 pt-3 border-t border-stone-100 text-stone-500 text-xs font-semibold">
                                         <div className="flex items-center gap-1.5">
-                                            <MapPin className="w-3.5 h-3.5 text-[#829E2C]" />
+                                            <FaLocationDot className="w-3.5 h-3.5 text-[#829E2C]" />
 
                                             <span>
                                                 {car.pickupLocation ||
