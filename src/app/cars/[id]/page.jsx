@@ -10,7 +10,7 @@ import { authClient } from "@/lib/auth-client";
 const CarDetailsPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  
+
   const { data: session, isPending: authLoading } = authClient.useSession();
   const loggedInUserEmail = session?.user?.email;
 
@@ -23,10 +23,20 @@ const CarDetailsPage = () => {
 
     const fetchCarDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/cars/${id}`);
+        
+        const response = await fetch(`http://localhost:5000/api/cars/${id}`, {
+          method: "GET", 
+          headers: {
+            "Content-Type": "application/json",
+          }
+        });
+        
         const data = await response.json();
         if (data.success) {
           setCar(data.data);
+        } else {
+          console.error("Backend error message:", data.message);
+          toast.error(data.message || "Failed to load vehicle details.");
         }
       } catch (error) {
         console.error("Error fetching car details:", error);
@@ -37,11 +47,13 @@ const CarDetailsPage = () => {
     };
 
     fetchCarDetails();
+    
   }, [id]);
 
   const handleBookingClick = () => {
+    
     if (!session) {
-      toast.error("Please log in first to book this vehicle! ");
+      toast.error("Please log in first to book this vehicle! 🔒");
       setTimeout(() => {
         router.push("/login");
       }, 1500);
@@ -51,7 +63,7 @@ const CarDetailsPage = () => {
   };
 
   const handleBookingSuccess = () => {
-    toast.success(`Successfully booked ${car.carName} `, {
+    toast.success(`Successfully booked ${car?.carName} 🎉`, {
       duration: 3000,
       position: "top-center",
       style: {
@@ -64,11 +76,10 @@ const CarDetailsPage = () => {
       },
     });
 
-  
-    setCar((prevCar) => ({
+    setCar((prevCar) => prevCar ? ({
       ...prevCar,
       bookingCount: (prevCar.bookingCount || 0) + 1,
-    }));
+    }) : null);
 
     setIsModalOpen(false);
 
@@ -77,7 +88,7 @@ const CarDetailsPage = () => {
     }, 2000);
   };
 
-  if (loading || authLoading) {
+  if (authLoading || (loading && !car)) {
     return (
       <div className="min-h-screen bg-[#F4F7F6] flex items-center justify-center">
         <div className="flex flex-col items-center gap-2">
@@ -103,14 +114,18 @@ const CarDetailsPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F7F6] py-12 px-4 sm:px-6 lg:px-8">
+      <Toaster /> 
 
       <div className="max-w-4xl mx-auto">
+        {/* Back Button */}
         <Link href="/cars" className="inline-flex items-center gap-2 text-slate-600 hover:text-[#00B488] font-semibold text-sm mb-6 transition-colors cursor-pointer">
           <FiArrowLeft /> Back to Explore
         </Link>
 
+        {/* Details Card */}
         <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-xl shadow-slate-200/40 grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8">
 
+          {/* Left Column: Image Block */}
           <div className="relative h-64 md:h-full min-h-[300px] w-full bg-[#F8FAFC] rounded-2xl overflow-hidden border border-slate-100 flex items-center justify-center p-4">
             <img src={car.carImage} alt={car.carName} className="w-full h-full object-contain" />
             <span className={`absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full border shadow-sm ${
@@ -122,8 +137,10 @@ const CarDetailsPage = () => {
             </span>
           </div>
 
+          {/* Right Column: Information Block */}
           <div className="flex flex-col justify-between space-y-6">
             <div>
+              {/* Badges */}
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="bg-emerald-50 text-[#00B488] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-emerald-200/50">
                   {car.carType || car.type}
@@ -133,9 +150,11 @@ const CarDetailsPage = () => {
                 </span>
               </div>
 
+              {/* Title & Description */}
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-3">{car.carName}</h1>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">{car.description}</p>
 
+              {/* Specifications */}
               <div className="space-y-3.5 border-t border-slate-100 pt-5">
                 <div className="flex items-center gap-3 text-slate-700 text-sm font-medium">
                   <div className="p-2 bg-slate-50 rounded-lg text-[#00B488]"><FiUsers /></div>
@@ -148,6 +167,7 @@ const CarDetailsPage = () => {
               </div>
             </div>
 
+            {/* Bottom Row: Price & Action Button */}
             <div className="border-t border-slate-100 pt-5 flex items-center justify-between gap-4 mt-auto">
               <div>
                 <span className="text-xs text-slate-400 block font-medium">Daily Rental Price</span>
@@ -175,6 +195,7 @@ const CarDetailsPage = () => {
         </div>
       </div>
 
+      {/* Booking Modal Setup */}
       <BookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -186,4 +207,4 @@ const CarDetailsPage = () => {
   );
 }
 
-export default CarDetailsPage
+export default CarDetailsPage;
