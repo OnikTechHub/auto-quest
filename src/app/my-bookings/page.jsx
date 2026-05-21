@@ -18,7 +18,7 @@ const MyBookingsPage = () => {
 
     const fetchMyBookings = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/bookings?email=${session.user.email}`);
+        const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings?email=${session.user.email}`);
         const data = await response.json();
         
         if (data.success) {
@@ -39,7 +39,7 @@ const MyBookingsPage = () => {
   const handleCancelBooking = async (bookingId) => {
 
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings/${bookingId}`, {
         method: "DELETE",
       });
       const data = await response.json();

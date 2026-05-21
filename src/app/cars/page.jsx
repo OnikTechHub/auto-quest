@@ -16,7 +16,7 @@ const ExploreCarsPage = () => {
     const fetchCars = async () => {
       try {
        
-        const url = `http://localhost:5000/api/cars?search=${search}&carType=${carType}&sortBy=${sortBy}`;
+        const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars?search=${search}&carType=${carType}&sortBy=${sortBy}`;
         const response = await fetch(url);
         const data = await response.json();
 

@@ -30,7 +30,7 @@ const MyCarsPage = () => {
 
   const fetchMyCars = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/my-cars?email=${userEmail}`);
+      const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/my-cars?email=${userEmail}`);
       const data = await response.json();
       if (data.success) {
         setCars(data.data);
@@ -65,7 +65,7 @@ const MyCarsPage = () => {
     try {
       if (modalType === "add") {
         
-        const response = await fetch("http://localhost:5000/api/cars", {
+        const response = await fetch("({process.env.NEXT_PUBLIC_SERVER_URL}/api/cars", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -80,7 +80,7 @@ const MyCarsPage = () => {
         }
       } else {
 
-        const response = await fetch(`http://localhost:5000/api/cars/${formData._id}`, {
+        const response = await fetch(`({process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${formData._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -107,7 +107,7 @@ const MyCarsPage = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/cars/${deleteId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}api/cars/${deleteId}`, {
         method: "DELETE",
       });
       const data = await response.json();

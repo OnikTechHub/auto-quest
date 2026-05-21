@@ -24,7 +24,7 @@ const CarDetailsPage = () => {
     const fetchCarDetails = async () => {
       try {
         
-        const response = await fetch(`http://localhost:5000/api/cars/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/cars/${id}`, {
           method: "GET", 
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +53,7 @@ const CarDetailsPage = () => {
   const handleBookingClick = () => {
     
     if (!session) {
-      toast.error("Please log in first to book this vehicle! 🔒");
+      toast.error("Please log in first to book this vehicle! ");
       setTimeout(() => {
         router.push("/login");
       }, 1500);
@@ -63,7 +63,7 @@ const CarDetailsPage = () => {
   };
 
   const handleBookingSuccess = () => {
-    toast.success(`Successfully booked ${car?.carName} 🎉`, {
+    toast.success(`Successfully booked ${car?.carName} `, {
       duration: 3000,
       position: "top-center",
       style: {
