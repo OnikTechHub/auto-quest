@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚗 AutoQuest | Premium Car Rental Platform
 
-## Getting Started
+AutoQuest is a modern, dynamic, and fully responsive full-stack car rental application designed to make vehicle booking, fleet management, and rental tracking seamless. Built with high-fidelity UI standards and fluid animations, this platform offers a luxury car rental experience directly from the browser.
 
-First, run the development server:
+---
 
+## 🚀 Live Links & Resources
+
+* **⚡ Live Deployment:** [https://auto-quest-z5od.vercel.app](https://auto-quest-z5od.vercel.app)
+* **💻 Frontend Repository:** [https://github.com/OnikTechHub/auto-quest]
+* **⚙️ Backend Repository:** [https://github.com/OnikTechHub/auto-quest-server]
+
+---
+
+## ✨ Key Features & Functionalities
+
+* **🔐 Advanced Authentication:** Secure and seamless user onboarding with persistent session management (Better-Auth / Firebase integration).
+* **🚘 Fleet & Garage Control (Full CRUD):** Interactive registry where users can **Add, Update, View, and Delete** their cars with instant state management and real-time updates.
+* **📅 Intelligent Booking System:** Real-time booking processing that automatically increments/decrements a vehicle's overall `bookingCount` upon rental actions or cancellations.
+* **🔍 Dynamic Filters & Smart Search:** Live-filtering system by vehicle category (SUV, Sedan, Luxury, Hatchback) combined with an instant regex search bar and price-based sorting (Low-to-High / High-to-Low).
+* **✨ Figma-Standard Animations:** Premium, micro-interactions and page-transition effects that bring the user interface to life.
+* **📱 Fully Responsive Design:** Clean layout optimized across all modern screen resolutions, from mobile devices to ultra-wide monitors.
+
+---
+
+## 🛠️ Technologies & Tools Used
+
+### **Frontend:**
+* **Next.js** – Production-ready framework for building high-performance interface components.
+* **Hero UI** – Modern, accessible, and stunning UI component library used for building professional-grade tables, inputs, and layouts.
+* **Framer Motion** – Production-ready motion library for smooth gesture animations, modal open/close scales, and staggered entrance effects.
+* **Tailwind CSS** – Utility-first CSS framework for custom styling, gradients, and fluid spacing.
+* **React Icons & React Hot Toast** – Used for rich iconography and elegant toast alert notifications.
+
+### **Backend & Database:**
+* **Node.js & Express.js** – Robust and scalable server runtime environment for hosting secure RESTful APIs.
+* **MongoDB Atlas** – Cloud-hosted NoSQL database engine for structured schema management and raw data persistence.
+* **Vercel Serverless Functions** – Optimized serverless deployment handling instant request routing and API computing.
+
+---
+
+## 📦 Local Installation & Setup
+
+To run this project locally, follow these simple steps:
+
+### **1. Clone the repository:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone [https://github.com/your-username/auto-quest.git](https://github.com/your-username/auto-quest.git)
+cd auto-quest
