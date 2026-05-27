@@ -45,5 +45,5 @@ To run this project locally, follow these simple steps:
 
 ### **1. Clone the repository:**
 ```bash
-git clone [https://github.com/your-username/auto-quest.git](https://github.com/your-username/auto-quest.git)
+git clone [https://github.com/OnikTechHub/auto-quest.git](https://github.com/OnikTechHub/auto-quest.git)
 cd auto-quest
